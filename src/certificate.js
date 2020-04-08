@@ -19,7 +19,6 @@ async function generateQR(text) {
 
 
 function pad (str) {
-  console.log(str)
   return String(str).padStart(2, '0');
 }
 
@@ -40,10 +39,37 @@ function idealFontSize (font, text, maxWidth, minSize, defaultSize) {
   return (textWidth > maxWidth) ? null : currentSize
 }
 
-const profile = { lastname: "Dupont", firstname: "Jean", birthday: "01/02/1970", lieunaissance: "Neeici", address: "Adresse ici", zipcode: "59000", town: "Lille", datesortie: "06/04/2020", heuresortie: "12:34" };
+function getData ()
+{
+
+    profile = {};
+    reasons = [];
+
+    for (const field of document.querySelectorAll('#form-profile input')) {
+
+        if (field.id === 'field-datesortie') {
+            var dateSortie = field.value.split('-')
+            profile[field.id.substring('field-'.length)] = `${dateSortie[2]}/${dateSortie[1]}/${dateSortie[0]}`;
+
+        }
+        else if (field.name === 'field-reason' && field.checked) {
+            reasons.push(field.value);
+        }
+        else {
+            profile[field.id.substring('field-'.length)] = field.value;
+        }
+    }
+
+    console.log(profile);
+    console.log(reasons);
+    generatePdf(profile, reasons);
+}
+//const profile = { lastname: "Dupont", firstname: "Jean", birthday: "01/02/1970", lieunaissance: "Neeici", address: "Adresse ici", zipcode: "59000", town: "Lille", datesortie: "06/04/2020", heuresortie: "12:34" };
 
 
-async function generatePdf(/*profile, */ reasons) {
+async function generatePdf(profile, reasons) {
+
+
   const url = 'base.pdf'
 
   const generatedDate = new Date()
