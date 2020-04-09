@@ -19,4 +19,4 @@ $ npm run start
 
 ## License
 
-MIT © [altertek](https://altertek.org/)
+MIT © [Altertek](https://altertek.org/)
