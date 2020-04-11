@@ -48,6 +48,16 @@
        margin: 0px 15px 5px 5px;
       }
 
+      .error {
+       border-radius: 5px;
+       padding: 20px;
+       border: 1px;
+       border-color: red;
+       border-style: solid;
+       background-color: #ffaeae;
+       color: darkred;
+       visibility: hidden;
+      }
     </style>
   </head>
 
@@ -226,8 +236,10 @@
         </form>
 
         <p>Générer une attestation pour faire ses courses avec <code>pdf-lib</code></p>
-        <button onclick="getPDF();return false;">Télécharger l'attestation</button>
-        <button onclick="showPDF();return false;">Voir l'attestation</button>
+        <button class="generate" onclick="getPDF();return false;">Télécharger l'attestation</button>
+        <button class="generate" onclick="showPDF();return false;">Voir l'attestation</button>
+        <section class="error" id="error"></section>
+
       </section>
 
       <footer class="footer">

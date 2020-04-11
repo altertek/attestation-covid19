@@ -67,8 +67,11 @@ const getData = () => {
             profile[field.id.substring('field-'.length)] = `${dateSortie[2]}/${dateSortie[1]}/${dateSortie[0]}`;
 
         }
-        else if (field.name === 'field-reason' && field.checked) {
-            reasons.push(field.value);
+        else if (field.name === 'field-reason') {
+            if (field.checked) {
+                reasons.push(field.value);
+            }
+            continue
         }
         else {
             profile[field.id.substring('field-'.length)] = field.value;
@@ -198,6 +201,53 @@ async function generatePdf(profile, reasons) {
 
   return { blob, fileName };
 }
+const checkEmptyFields = (profile, reasons) => {
+    emptyFields = []
+
+    Object.entries(profile).forEach(([key,value])=>{
+        if (value === "")
+            emptyFields.push(key)
+    })
+
+    if (reasons.length == 0) {
+        emptyFields.push('reason')
+    }
+
+    return emptyFields
+}
+
+const errorCheck = (profile, reasons) => {
+
+    const errorField = document.getElementById('error');
+    const requiredFields = {
+        firstname: 'Prénom',
+        lastname: 'Nom',
+        birthday: 'Date de naissance',
+        lieunaissance: 'Lieu de naissance',
+        address: 'Adresse',
+        town: 'Ville',
+        zipcode: 'Code postal',
+        reason: 'Motif de sortie',
+    }
+
+    const emptyFields = checkEmptyFields(profile, reasons)
+
+    if (emptyFields.length == 0) {
+        errorField.style.visibility = 'hidden'
+        for (const button of document.getElementsByClassName('generate'))
+            button.className = 'generate'
+        return true
+    }
+
+    errorString = emptyFields.map(field => requiredFields[field]).join(', ')
+
+    errorField.innerHTML = `Veuillez remplir les champs suivants: ${errorString}`;
+    errorField.style.visibility = 'visible'
+    for (const button of document.getElementsByClassName('generate'))
+        button.className = 'generate button-outline'
+    return false
+
+}
 
 const createPDFLink = (blob, fileName) => {
   const link = document.createElement('a');
@@ -209,12 +259,19 @@ const createPDFLink = (blob, fileName) => {
 
 const getPDF = async () => {
   const { profile, reasons } = getData();
+  if (errorCheck(profile, reasons) == false)  {
+      return;
+  }
   const { blob, fileName } = await generatePdf(profile, reasons);
   createPDFLink(blob, fileName);
 }
 
 const showPDF = async () => {
   const { profile, reasons } = getData();
+  if (errorCheck(profile, reasons) == false)  {
+      return;
+  }
+
   const { blob, fileName } = await generatePdf(profile, reasons);
   const url = URL.createObjectURL(blob);
   window.location.assign(url);
