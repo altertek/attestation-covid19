@@ -77,12 +77,8 @@ function getData ()
         }
     }
 
-    console.log(profile);
-    console.log(reasons);
     generatePdf(profile, reasons);
 }
-//const profile = { lastname: "Dupont", firstname: "Jean", birthday: "01/02/1970", lieunaissance: "Neeici", address: "Adresse ici", zipcode: "59000", town: "Lille", datesortie: "06/04/2020", heuresortie: "12:34" };
-
 
 async function generatePdf(profile, reasons) {
 
