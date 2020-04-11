@@ -1,221 +1,61 @@
-//import { PDFDocument, StandardFonts, grayscale  } from 'pdf-lib'
-// import QRCode from 'qrcode'
-
-const { PDFDocument, StandardFonts, grayscale } = PDFLib
-
-async function generateQR(text) {
-  try {
-    const opts = {
-      errorCorrectionLevel: 'M',
-      type: 'image/png',
-      quality: 0.92,
-      margin: 1,
-    };
-    return await QRCode.toDataURL(text, opts);
-  } catch (err) {
-    console.error(err);
-  }
+function getTemplate({ firstName, lastName, birthDate, birthPlace, address }) {
+  const template = `
+  <div id="capture" style="width: 210mm; height: 297mm">
+  <h1>ATTESTATION DE DEPLACEMENT DEROGATOIRE</h1>
+<br>
+<p>En application de l'article 3 du décret du 23 mars 2020 prescrivant les mesures générales nécessaires pour faire face à l'épidémie de Covid19 dans le cadre de l'état d'urgence sanitaire</p>
+<br>
+<p>Je soussigné(e),</p>
+<br>
+<p>Mme/M.:${firstName} ${lastName}</p>
+<p>Né(e) le: ${birthDate}</p>
+<p>à : ${birthPlace}</p>
+<p>Demeurant : ${address}</p>
+<p>certifie que mon déplacement est lié au motif suivant (cocher la case) autorisé par l'article 3 du décret du 23 mars 2020 prescrivant les mesures générales nécessaires pour faire face à l'épidémie de Covid19 dans le cadre de l'état d'urgence sanitaire<sup>1</sup>:</p>
+<br>
+<p>[ ] Déplacements entre le domicile et le lieu d'exercice de l'activité professionnelle, lorsqu'ils sont indispensables à l'exercice d'activités ne pouvant être organisées sous forme de télétravail ou déplacements professionnels ne pouvant être différés<sup>2</sup>.</p>
+<br>
+<p>[ ] Déplacements pour effectuer des achats de fournitures nécessaires à l'activité professionnelle et des achats de première nécessité<sup>3</sup></a> dans des établissements dont les activités demeurent autorisées (liste sur gouvernement.fr).</p>
+<br>
+<p>[ ] Consultations et soins ne pouvant être assurés à distance et ne pouvant être différés ; consultations et soins des patients atteints d'une affection de longue durée.</p>
+<br>
+<p>[ ] Déplacements pour motif familial impérieux, pour l'assistance aux personnes vulnérables ou la garde d'enfants.</p>
+<br>
+<p>[ ] Déplacements brefs, dans la limite d'une heure quotidienne et dans un rayon maximal d'un kilomètre autour du domicile, liés soit à l'activité physique individuelle des personnes, à l'exclusion de toute pratique sportive collective et de toute proximité avec d'autres personnes, soit à la promenade avec les seules personnes regroupées dans un même domicile, soit aux besoins des animaux de compagnie.</p>
+<br>
+<p>[ ] Convocation judiciaire ou administrative.</p>
+<br>
+<p>[ ] Participation à des missions d'intérêt général sur demande de l'autorité administrative.</p>
+<br>
+<br>
+<p>Fait à:</p>
+<br>
+<p>Le: à h</p>
+<p>(Date et heure de début de sortie à mentionner obligatoirement</p>
+<br>
+<p>
+1. Les personnes souhaitant bénéficier de l'une de ces exceptions doivent se munir s'il y a lieu, lors de leurs déplacements hors de leur domicile, d'un document leur permettant de justifier que le déplacement considéré entre dans le champ de l'une de ces exceptions.<br>
+2. A utiliser par les travailleurs non-salariés, lorsqu'ils ne peuvent disposer d'un justificatif de déplacement établi par leur employeur<br>
+3. Y compris les acquisitions à titre gratuit (distribution de denrées alimentaires&hellip;) et les déplacements liés à la perception de prestations sociales et au retrait d'espèces.
+</p>
+</div>
+  `
+  return template
 }
 
 
-function pad (str) {
-  return String(str).padStart(2, '0');
-}
-
-function setDateNow (date) {
-  year = date.getFullYear()
-  month = pad(date.getMonth() + 1) // Les mois commencent à 0
-  day = pad(date.getDate())
-}
-
-document.addEventListener('DOMContentLoaded', setReleaseDateTime)
-
-function setReleaseDateTime () {
-    const loadedDate = new Date()
-
-    setDateNow(loadedDate)
-
-    const releaseDateInput = document.querySelector('#field-datesortie')
-    releaseDateInput.value = `${year}-${month}-${day}`
-
-    const hour = pad(loadedDate.getHours())
-    const minute = pad(loadedDate.getMinutes())
-
-    const releaseTimeInput = document.querySelector('#field-heuresortie')
-    releaseTimeInput.value = `${hour}:${minute}`
-}
-
-function idealFontSize (font, text, maxWidth, minSize, defaultSize) {
-  let currentSize = defaultSize
-  let textWidth = font.widthOfTextAtSize(text, defaultSize)
-
-  while (textWidth > maxWidth && currentSize > minSize) {
-    textWidth = font.widthOfTextAtSize(text, --currentSize)
-  }
-
-  return (textWidth > maxWidth) ? null : currentSize
-}
-
-const getData = () => {
-    const profile = {};
-    const reasons = [];
-
-    for (const field of document.querySelectorAll('#form-profile input')) {
-
-        if (field.id === 'field-datesortie') {
-            var dateSortie = field.value.split('-')
-            profile[field.id.substring('field-'.length)] = `${dateSortie[2]}/${dateSortie[1]}/${dateSortie[0]}`;
-
-        }
-        else if (field.name === 'field-reason' && field.checked) {
-            reasons.push(field.value);
-        }
-        else {
-            profile[field.id.substring('field-'.length)] = field.value;
-        }
-    }
-
-    return { profile, reasons };
-}
-
-async function generatePdf(profile, reasons) {
-  const url = 'base.pdf'
-
-  const generatedDate = new Date()
-  setDateNow(generatedDate)
-  const creationDate = `${day}/${month}/${year}`
-
-  const hour = pad(generatedDate.getHours())
-  const minute = pad(generatedDate.getMinutes())
-  const creationHour = `${hour}h${minute}`
-
-  const { lastname, firstname, birthday, lieunaissance, address, zipcode, town, datesortie, heuresortie } = profile
-  const releaseHours = String(heuresortie).substring(0, 2)
-  const releaseMinutes = String(heuresortie).substring(3, 5)
-
-  const data = [
-    `Cree le: ${creationDate} a ${creationHour}`,
-    `Nom: ${lastname}`,
-    `Prenom: ${firstname}`,
-    `Naissance: ${birthday} a ${lieunaissance}`,
-    `Adresse: ${address} ${zipcode} ${town}`,
-    `Sortie: ${datesortie} a ${releaseHours}h${releaseMinutes}`,
-    `Motifs: ${reasons}`,
-  ].join('; ')
-
-  const existingPdfBytes = await fetch(url, {mode: 'no-cors'}).then(res => res.arrayBuffer())
-  console.log(existingPdfBytes)
-
-  const pdfDoc = await PDFDocument.load(existingPdfBytes)
-  const page1 = pdfDoc.getPages()[0]
-
-  const font = await pdfDoc.embedFont(StandardFonts.Helvetica)
-  const drawText = (text, x, y, size = 11) => {
-    page1.drawText(text, { x, y, size, font })
-  }
-
-  drawText(`${firstname} ${lastname}`, 123, 686)
-  drawText(birthday, 123, 661)
-  drawText(lieunaissance, 92, 638)
-  drawText(`${address} ${zipcode} ${town}`, 134, 613)
-
-  if (reasons.includes('travail')) {
-    drawText('x', 76, 527, 19)
-  }
-  if (reasons.includes('courses')) {
-    drawText('x', 76, 478, 19)
-  }
-  if (reasons.includes('sante')) {
-    drawText('x', 76, 436, 19)
-  }
-  if (reasons.includes('famille')) {
-    drawText('x', 76, 400, 19)
-  }
-  if (reasons.includes('sport')) {
-    drawText('x', 76, 345, 19)
-  }
-  if (reasons.includes('judiciaire')) {
-    drawText('x', 76, 298, 19)
-  }
-  if (reasons.includes('missions')) {
-    drawText('x', 76, 260, 19)
-  }
-  let locationSize = idealFontSize(font, profile.town, 83, 7, 11)
-
-  if (!locationSize) {
-    alert('Le nom de la ville risque de ne pas être affiché correctement en raison de sa longueur. ' +
-      'Essayez d\'utiliser des abréviations ("Saint" en "St." par exemple) quand cela est possible.')
-    locationSize = 7
-  }
-
-  drawText(profile.town, 111, 226, locationSize)
-
-  if (reasons !== '') {
-    // Date sortie
-    drawText(`${profile.datesortie}`, 92, 200)
-    drawText(releaseHours, 200, 201)
-    drawText(releaseMinutes, 220, 201)
-  }
-
-  // Date création
-  drawText('Date de création:', 464, 150, 7)
-  drawText(`${creationDate} à ${creationHour}`, 455, 144, 7)
-
-  const generatedQR = await generateQR(data)
-
-  const qrImage = await pdfDoc.embedPng(generatedQR)
-
-  page1.drawImage(qrImage, {
-    x: page1.getWidth() - 170,
-    y: 155,
-    width: 100,
-    height: 100,
-  })
-  page1.drawRectangle({
-    x: 60,
-    y: 150,
-    width: 100,
-    height: 15,
-    color: grayscale(1),
-  })
-
-  pdfDoc.addPage()
-  const page2 = pdfDoc.getPages()[1]
-  page2.drawImage(qrImage, {
-    x: 50,
-    y: page2.getHeight() - 350,
-    width: 300,
-    height: 300,
-  })
-
-  const pdfBytes = await pdfDoc.save()
-
-  const blob = new Blob([pdfBytes], { type: 'application/pdf' })
-  // browser.downloads.download(pdfBytes, "example.pdf", "application/pdf");
-
-  const dateFileName = datesortie.split('/').join('-');
-  const fileName = `${firstname[0]}${lastname[0]}_${dateFileName}_${releaseHours}h${releaseMinutes}.pdf`;
-
-  return { blob, fileName };
-}
-
-const createPDFLink = (blob, fileName) => {
-  const link = document.createElement('a');
-  link.href = URL.createObjectURL(blob);
-  link.download = fileName;
-  document.body.appendChild(link);
-  link.click();
-}
-
-const getPDF = async () => {
-  const { profile, reasons } = getData();
-  const { blob, fileName } = await generatePdf(profile, reasons);
-  createPDFLink(blob, fileName);
-}
-
-const showPDF = async () => {
-  const { profile, reasons } = getData();
-  const { blob, fileName } = await generatePdf(profile, reasons);
-  const url = URL.createObjectURL(blob);
-  window.location.assign(url);
+function generatePdf() {
+  const htmlString = getTemplate({ firstName: "Jean", lastName: "Dupont", birthDate: "01/02/1970", birthPlace: "Test", address: "Ici" })
+  const iframe = document.createElement('iframe');
+  document.body.appendChild(iframe);
+  setTimeout(function(){
+    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+    iframeDoc.body.innerHTML = htmlString;
+    html2canvas(iframeDoc.body).then(canvas => {
+      const imgData = canvas.toDataURL("image/png", 1.0);
+      const pdf = new jsPDF();
+      pdf.addImage(imgData, 'png', 0, 0);
+      pdf.save('sample.pdf');
+    });
+  }, 10);
 }
