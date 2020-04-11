@@ -217,5 +217,5 @@ const showPDF = async () => {
   const { profile, reasons } = getData();
   const { blob, fileName } = await generatePdf(profile, reasons);
   const url = URL.createObjectURL(blob);
-  window.open(url);
+  window.location.assign(url);
 }
