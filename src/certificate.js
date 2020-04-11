@@ -28,6 +28,23 @@ function setDateNow (date) {
   day = pad(date.getDate())
 }
 
+document.addEventListener('DOMContentLoaded', setReleaseDateTime)
+
+function setReleaseDateTime () {
+    const loadedDate = new Date()
+
+    setDateNow(loadedDate)
+
+    const releaseDateInput = document.querySelector('#field-datesortie')
+    releaseDateInput.value = `${year}-${month}-${day}`
+
+    const hour = pad(loadedDate.getHours())
+    const minute = pad(loadedDate.getMinutes())
+
+    const releaseTimeInput = document.querySelector('#field-heuresortie')
+    releaseTimeInput.value = `${hour}:${minute}`
+}
+
 function idealFontSize (font, text, maxWidth, minSize, defaultSize) {
   let currentSize = defaultSize
   let textWidth = font.widthOfTextAtSize(text, defaultSize)
