@@ -56,11 +56,9 @@ function idealFontSize (font, text, maxWidth, minSize, defaultSize) {
   return (textWidth > maxWidth) ? null : currentSize
 }
 
-function getData ()
-{
-
-    profile = {};
-    reasons = [];
+const getData = () => {
+    const profile = {};
+    const reasons = [];
 
     for (const field of document.querySelectorAll('#form-profile input')) {
 
@@ -77,12 +75,10 @@ function getData ()
         }
     }
 
-    generatePdf(profile, reasons);
+    return { profile, reasons };
 }
 
 async function generatePdf(profile, reasons) {
-
-
   const url = 'base.pdf'
 
   const generatedDate = new Date()
@@ -198,14 +194,28 @@ async function generatePdf(profile, reasons) {
   // browser.downloads.download(pdfBytes, "example.pdf", "application/pdf");
 
   const dateFileName = datesortie.split('/').join('-');
-  downloadBlob(blob, `${firstname[0]}${lastname[0]}_${dateFileName}_${releaseHours}h${releaseMinutes}.pdf`);
+  const fileName = `${firstname[0]}${lastname[0]}_${dateFileName}_${releaseHours}h${releaseMinutes}.pdf`;
+
+  return { blob, fileName };
 }
 
-function downloadBlob (blob, fileName) {
-  const link = document.createElement('a')
-  var url = URL.createObjectURL(blob)
-  link.href = url
-  link.download = fileName
-  document.body.appendChild(link)
-  link.click()
+const createPDFLink = (blob, fileName) => {
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = fileName;
+  document.body.appendChild(link);
+  link.click();
+}
+
+const getPDF = async () => {
+  const { profile, reasons } = getData();
+  const { blob, fileName } = await generatePdf(profile, reasons);
+  createPDFLink(blob, fileName);
+}
+
+const showPDF = async () => {
+  const { profile, reasons } = getData();
+  const { blob, fileName } = await generatePdf(profile, reasons);
+  const url = URL.createObjectURL(blob);
+  window.location.assign(url);
 }
