@@ -201,7 +201,8 @@ async function generatePdf(profile, reasons) {
   const blob = new Blob([pdfBytes], { type: 'application/pdf' })
   // browser.downloads.download(pdfBytes, "example.pdf", "application/pdf");
 
-  downloadBlob(blob, "example.pdf");
+  const dateFileName = datesortie.split('/').join('-');
+  downloadBlob(blob, `${firstname[0]}${lastname[0]}_${dateFileName}_${releaseHours}h${releaseMinutes}.pdf`);
 }
 
 function downloadBlob (blob, fileName) {
