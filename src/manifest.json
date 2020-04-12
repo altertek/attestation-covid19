@@ -1,6 +1,6 @@
 {
-  "short_name": "Attest Covid19",
-  "name": "Attestation Covid19",
+  "short_name": "Attest covid19",
+  "name": "Attestation covid19",
   "description": "Génération d'attestation de déplacement Covid19",
   "icons": [
     {
