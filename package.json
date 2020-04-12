@@ -19,6 +19,7 @@
   },
   "homepage": "https://attestation-covid19.altertek.org/",
   "dependencies": {
+    "parcel-plugin-sw-precache": "^1.1.1",
     "pdf-lib": "^1.4.1",
     "qrcode": "^1.4.4"
   },
