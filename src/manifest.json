@@ -1,7 +1,7 @@
 {
   "short_name": "Attest Covid19",
-  "name": "Attestion Covid19",
-  "description": "Progressive webapp generating fr attestations",
+  "name": "Attestation Covid19",
+  "description": "Génération d'attestation de déplacement Covid19",
   "icons": [
     {
       "src": "/images/icons-192.png",
