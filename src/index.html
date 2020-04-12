@@ -11,7 +11,7 @@
       content="Altertek - Attestation covid19"
     />
     <title>Altertek - Attestation covid19</title>
-    <link rel="manifest" href="manifest.json" />
+    <link rel="manifest" href="./manifest.webmanifest" />
     <link rel="stylesheet" href="lib/milligram.min.css">
 
     <style>
@@ -246,8 +246,8 @@
         </form>
 
         <p>Générer une attestation pour faire ses courses avec <code>pdf-lib</code></p>
-        <button class="generate" onclick="getPDF();return false;">Télécharger l'attestation</button>
-        <button class="generate" onclick="showPDF();return false;">Voir l'attestation</button>
+        <button id="getPDF" class="generate">Télécharger l'attestation</button>
+        <button id="showPDF" class="generate">Voir l'attestation</button>
         <section class="error" id="error"></section>
 
       </section>
@@ -260,8 +260,6 @@
     </main>
 
     <script type="text/javascript" src="sw.js"></script>
-    <script type="text/javascript" src="lib/qrcode.min.js"></script>
-    <script type="text/javascript" src="lib/pdf-lib.min.js"></script>
     <script type="text/javascript" src="certificate.js"></script>
     <script>
   if ( "serviceWorker" in navigator ) {
