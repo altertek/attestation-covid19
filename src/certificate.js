@@ -23,17 +23,17 @@ function pad (str) {
 }
 
 function setDateNow (date) {
-  year = date.getFullYear()
-  month = pad(date.getMonth() + 1) // Les mois commencent à 0
-  day = pad(date.getDate())
+  const year = date.getFullYear()
+  const month = pad(date.getMonth() + 1) // Les mois commencent à 0
+  const day = pad(date.getDate())
+  return {year, month, day}
 }
 
 document.addEventListener('DOMContentLoaded', setReleaseDateTime)
 
 function setReleaseDateTime () {
     const loadedDate = new Date()
-
-    setDateNow(loadedDate)
+    const { year, month, day } = setDateNow(loadedDate);
 
     const releaseDateInput = document.querySelector('#field-datesortie')
     releaseDateInput.value = `${year}-${month}-${day}`
@@ -85,7 +85,8 @@ async function generatePdf(profile, reasons) {
   const url = 'base.pdf'
 
   const generatedDate = new Date()
-  setDateNow(generatedDate)
+  const { year, month, day } = setDateNow(generatedDate);
+
   const creationDate = `${day}/${month}/${year}`
 
   const hour = pad(generatedDate.getHours())
