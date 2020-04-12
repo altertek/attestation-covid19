@@ -1,7 +1,7 @@
-//import { PDFDocument, StandardFonts, grayscale  } from 'pdf-lib'
-// import QRCode from 'qrcode'
-
-const { PDFDocument, StandardFonts, grayscale } = PDFLib
+import { PDFDocument, StandardFonts, grayscale  } from 'pdf-lib'
+import QRCode from 'qrcode'
+import 'regenerator-runtime/runtime'
+import pdfBase from './base.pdf'
 
 async function generateQR(text) {
   try {
@@ -107,8 +107,7 @@ async function generatePdf(profile, reasons) {
     `Motifs: ${reasons}`,
   ].join('; ')
 
-  const existingPdfBytes = await fetch(url, {mode: 'no-cors'}).then(res => res.arrayBuffer())
-  console.log(existingPdfBytes)
+  const existingPdfBytes = await fetch(pdfBase).then(res => res.arrayBuffer())
 
   const pdfDoc = await PDFDocument.load(existingPdfBytes)
   const page1 = pdfDoc.getPages()[0]
@@ -195,7 +194,6 @@ async function generatePdf(profile, reasons) {
   const pdfBytes = await pdfDoc.save()
 
   const blob = new Blob([pdfBytes], { type: 'application/pdf' })
-  // browser.downloads.download(pdfBytes, "example.pdf", "application/pdf");
 
   const dateFileName = datesortie.split('/').join('-');
   const fileName = `${firstname[0]}${lastname[0]}_${dateFileName}_${releaseHours}h${releaseMinutes}.pdf`;
@@ -203,7 +201,7 @@ async function generatePdf(profile, reasons) {
   return { blob, fileName };
 }
 const checkEmptyFields = (profile, reasons) => {
-    emptyFields = []
+    const emptyFields = []
 
     Object.entries(profile).forEach(([key,value])=>{
         if (value === "")
@@ -240,7 +238,7 @@ const errorCheck = (profile, reasons) => {
         return true
     }
 
-    errorString = emptyFields.map(field => requiredFields[field]).join(', ')
+    const errorString = emptyFields.map(field => requiredFields[field]).join(', ')
 
     errorField.innerHTML = `Veuillez remplir les champs suivants: ${errorString}`;
     errorField.style.visibility = 'visible'
@@ -277,3 +275,12 @@ const showPDF = async () => {
   const url = URL.createObjectURL(blob);
   window.location.assign(url);
 }
+
+document.getElementById('getPDF').addEventListener('click', async event => {
+    event.preventDefault()
+    getPDF()
+})
+document.getElementById('showPDF').addEventListener('click', async event => {
+    event.preventDefault()
+    showPDF()
+})
