@@ -259,12 +259,12 @@
 
     </main>
 
-    <script type="text/javascript" src="sw.js"></script>
     <script type="text/javascript" src="certificate.js"></script>
     <script>
   if ( "serviceWorker" in navigator ) {
-
-    navigator.serviceWorker.register( "/sw.js" )
+    // trick found in https://github.com/cyyyu/parcel-plugin-sw-precache/issues/4
+    let swPath = `service-worker.js`;
+    navigator.serviceWorker.register(swPath)
       .then( function ( registration ) { // Registration was successful
 
         console.log( "ServiceWorker registration successful with scope: ", registration.scope );
