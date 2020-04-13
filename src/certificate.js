@@ -265,6 +265,14 @@ const errorCheck = (profile, reasons) => {
   return false;
 };
 
+function addSlash() {
+  const birthdayField = document.getElementById("field-birthday");
+  birthdayField.value = birthdayField.value
+    .replace(/^(\d{2})$/g, "$1/")
+    .replace(/^(\d{2})\/(\d{2})$/g, "$1/$2/")
+    .replace(/\/\//g, "/");
+}
+
 const createPDFLink = (blob, fileName) => {
   const link = document.createElement("a");
   link.href = URL.createObjectURL(blob);
@@ -303,3 +311,12 @@ document.getElementById("showPDF").addEventListener("click", async event => {
 });
 
 document.addEventListener("DOMContentLoaded", setReleaseDateTime);
+
+document.getElementById("field-birthday").addEventListener("keyup", event => {
+  const key = event.keyCode || event.charCode;
+  const backspaceDeleteKey = 8;
+  const deleteKey = 46;
+
+  if (key === backspaceDeleteKey || key === deleteKey) return;
+  addSlash();
+});
