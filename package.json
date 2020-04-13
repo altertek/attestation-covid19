@@ -23,7 +23,8 @@
   "dependencies": {
     "parcel-plugin-sw-precache": "^1.1.1",
     "pdf-lib": "^1.4.1",
-    "qrcode": "^1.4.4"
+    "qrcode": "^1.4.4",
+    "regenerator-runtime": "^0.13.5"
   },
   "devDependencies": {
     "eslint": "^5.13.0",
