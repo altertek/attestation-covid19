@@ -3,7 +3,7 @@ import QRCode from "qrcode";
 import "regenerator-runtime/runtime";
 import pdfBase from "./base.pdf";
 
-async function generateQR(text) {
+const generateQR = async text => {
   try {
     const opts = {
       errorCorrectionLevel: "M",
@@ -11,11 +11,12 @@ async function generateQR(text) {
       quality: 0.92,
       margin: 1
     };
-    return await QRCode.toDataURL(text, opts);
+    return QRCode.toDataURL(text, opts);
   } catch (err) {
     console.error(err);
+    return null;
   }
-}
+};
 
 function pad(str) {
   return String(str).padStart(2, "0");
@@ -27,8 +28,6 @@ function setDateNow(date) {
   const day = pad(date.getDate());
   return { year, month, day };
 }
-
-document.addEventListener("DOMContentLoaded", setReleaseDateTime);
 
 function setReleaseDateTime() {
   const loadedDate = new Date();
@@ -45,11 +44,11 @@ function setReleaseDateTime() {
 }
 
 function idealFontSize(font, text, maxWidth, minSize, defaultSize) {
-  let currentSize = defaultSize;
+  const currentSize = defaultSize;
   let textWidth = font.widthOfTextAtSize(text, defaultSize);
 
   while (textWidth > maxWidth && currentSize > minSize) {
-    textWidth = font.widthOfTextAtSize(text, --currentSize);
+    textWidth = font.widthOfTextAtSize(text, currentSize - 1);
   }
 
   return textWidth > maxWidth ? null : currentSize;
@@ -59,7 +58,9 @@ const getData = () => {
   const profile = {};
   const reasons = [];
 
-  for (const field of document.querySelectorAll("#form-profile input")) {
+  const inputs = Array.from(document.querySelectorAll("#form-profile input"));
+
+  inputs.forEach(field => {
     if (field.id === "field-datesortie") {
       const dateSortie = field.value.split("-");
       profile[
@@ -69,18 +70,15 @@ const getData = () => {
       if (field.checked) {
         reasons.push(field.value);
       }
-      continue;
     } else {
       profile[field.id.substring("field-".length)] = field.value;
     }
-  }
+  });
 
   return { profile, reasons };
 };
 
 async function generatePdf(profile, reasons) {
-  const url = "base.pdf";
-
   const generatedDate = new Date();
   const { year, month, day } = setDateNow(generatedDate);
 
@@ -153,6 +151,7 @@ async function generatePdf(profile, reasons) {
   let locationSize = idealFontSize(font, profile.town, 83, 7, 11);
 
   if (!locationSize) {
+    // eslint-disable-next-line no-alert
     alert(
       "Le nom de la ville risque de ne pas être affiché correctement en raison de sa longueur. " +
         'Essayez d\'utiliser des abréviations ("Saint" en "St." par exemple) quand cela est possible.'
@@ -216,7 +215,7 @@ const checkEmptyFields = (profile, reasons) => {
     if (value === "") emptyFields.push(key);
   });
 
-  if (reasons.length == 0) {
+  if (reasons.length === 0) {
     emptyFields.push("reason");
   }
 
@@ -238,10 +237,15 @@ const errorCheck = (profile, reasons) => {
 
   const emptyFields = checkEmptyFields(profile, reasons);
 
-  if (emptyFields.length == 0) {
+  if (emptyFields.length === 0) {
     errorField.style.visibility = "hidden";
-    for (const button of document.getElementsByClassName("generate"))
+
+    const buttons = Array.from(document.getElementsByClassName("generate"));
+    buttons.forEach(button => {
+      // eslint-disable-next-line no-param-reassign
       button.className = "generate";
+    });
+
     return true;
   }
 
@@ -251,8 +255,13 @@ const errorCheck = (profile, reasons) => {
 
   errorField.innerHTML = `Veuillez remplir les champs suivants: ${errorString}`;
   errorField.style.visibility = "visible";
-  for (const button of document.getElementsByClassName("generate"))
+
+  const buttons = Array.from(document.getElementsByClassName("generate"));
+  buttons.forEach(button => {
+    // eslint-disable-next-line no-param-reassign
     button.className = "generate button-outline";
+  });
+
   return false;
 };
 
@@ -266,7 +275,7 @@ const createPDFLink = (blob, fileName) => {
 
 const getPDF = async () => {
   const { profile, reasons } = getData();
-  if (errorCheck(profile, reasons) == false) {
+  if (errorCheck(profile, reasons) === false) {
     return;
   }
   const { blob, fileName } = await generatePdf(profile, reasons);
@@ -275,11 +284,11 @@ const getPDF = async () => {
 
 const showPDF = async () => {
   const { profile, reasons } = getData();
-  if (errorCheck(profile, reasons) == false) {
+  if (errorCheck(profile, reasons) === false) {
     return;
   }
 
-  const { blob, fileName } = await generatePdf(profile, reasons);
+  const { blob } = await generatePdf(profile, reasons);
   const url = URL.createObjectURL(blob);
   window.location.assign(url);
 };
@@ -292,3 +301,5 @@ document.getElementById("showPDF").addEventListener("click", async event => {
   event.preventDefault();
   showPDF();
 });
+
+document.addEventListener("DOMContentLoaded", setReleaseDateTime);

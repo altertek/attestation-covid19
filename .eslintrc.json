@@ -6,5 +6,8 @@
     "camelcase": 0,
     "no-console": ["error", { "allow": ["warn", "error"] }],
     "import/no-unresolved": "off"
+  },
+  "env": {
+    "browser": true
   }
 }
