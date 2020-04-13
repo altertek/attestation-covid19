@@ -5,22 +5,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="theme-color" content="#4285f4" />
     <meta name="author" content="Altertek" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="keywords" content="covid19" />
-    <meta
-      name="description"
-      content="Altertek - Attestation covid19"
-    />
+    <meta name="description" content="Altertek - Attestation covid19" />
     <title>Altertek - Attestation covid19</title>
     <link rel="apple-touch-icon" href="./images/apple-touch-icon-120x120.png" />
     <link rel="manifest" href="./manifest.webmanifest" />
-    <link rel="stylesheet" href="lib/milligram.min.css">
+    <link rel="stylesheet" href="lib/milligram.min.css" />
 
     <style>
       .wrapper .container {
         max-width: 80rem;
       }
-      .wrapper>.container {
+      .wrapper > .container {
         padding-bottom: 7.5rem;
         padding-top: 7.5rem;
       }
@@ -36,7 +33,7 @@
         cursor: pointer;
       }
       .checkbox-custom + .checkbox-custom-label:before {
-        content: '';
+        content: "";
         display: inline-block;
         background: #fff;
         border-radius: 5px;
@@ -49,109 +46,110 @@
         text-align: center;
       }
       .checkbox-custom:checked + .checkbox-custom-label:before {
-       width: 1px;
-       height: 5px;
-       border: solid blue;
-       border-width: 0 3px 3px 0;
-       transform: rotate(45deg);
-       -webkit-transform: rotate(45deg);
-       -ms-transform: rotate(45deg);
-       border-radius: 0px;
-       margin: 0px 15px 5px 5px;
+        width: 1px;
+        height: 5px;
+        border: solid blue;
+        border-width: 0 3px 3px 0;
+        transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        border-radius: 0px;
+        margin: 0px 15px 5px 5px;
       }
 
       .error {
-       border-radius: 5px;
-       padding: 20px;
-       border: 1px;
-       border-color: red;
-       border-style: solid;
-       background-color: #ffaeae;
-       color: darkred;
-       visibility: hidden;
+        border-radius: 5px;
+        padding: 20px;
+        border: 1px;
+        border-color: red;
+        border-style: solid;
+        background-color: #ffaeae;
+        color: darkred;
+        visibility: hidden;
       }
     </style>
   </head>
 
-
   <body>
-
-
     <main class="wrapper">
-
       <header class="header" id="home">
         <section class="container">
-          <h2 class="titre-2">Remplissez en ligne votre attestation numérique :</h2>
+          <h2 class="titre-2">
+            Remplissez en ligne votre attestation numérique :
+          </h2>
         </section>
       </header>
 
       <section class="container" id="forms">
-
         <form id="form-profile" onsubmit="false">
-
           <fieldset>
-
-            <label for="field-firstname" id="field-firstname-label">Prénom</label>
+            <label for="field-firstname" id="field-firstname-label"
+              >Prénom</label
+            >
             <input
-               type="text"
-               class="form-control"
-               id="field-firstname"
-               name="firstname"
-               autocomplete="given-name"
-               placeholder="Jean"
-               aria-labelledby="field-firstname-label"
-               required
-               autofocus
-               >
+              type="text"
+              class="form-control"
+              id="field-firstname"
+              name="firstname"
+              autocomplete="given-name"
+              placeholder="Jean"
+              aria-labelledby="field-firstname-label"
+              required
+              autofocus
+            />
             <span class="validity"></span>
             <p class="exemple"></p>
 
             <label for="field-lastname" id="field-lastname-label">Nom</label>
             <div class="input-group  align-items-center">
               <input
-                 type="text"
-                 class="form-control"
-                 id="field-lastname"
-                 name="lastname"
-                 autocomplete="family-name"
-                 placeholder="Dupont"
-                 aria-labelledby="field-lastname-label"
-                 required
-                 autofocus
-                 >
+                type="text"
+                class="form-control"
+                id="field-lastname"
+                name="lastname"
+                autocomplete="family-name"
+                placeholder="Dupont"
+                aria-labelledby="field-lastname-label"
+                required
+                autofocus
+              />
               <span class="validity"></span>
             </div>
             <p class="exemple"></p>
 
-            <label for="field-birthday" id="field-birthday-label">Date de naissance (au format jj/mm/aaaa)</label>
+            <label for="field-birthday" id="field-birthday-label"
+              >Date de naissance (au format jj/mm/aaaa)</label
+            >
             <div class="input-group  align-items-center">
               <input
-                 type="text"
-                 inputmode="numeric"
-                 class="form-control"
-                 id="field-birthday"
-                 name="birthday"
-                 autocomplete="bday"
-                 placeholder="01/01/1970"
-                 maxlength="10"
-                 aria-labelledby="field-birthday-label"
-                 required
-                 >
+                type="text"
+                inputmode="numeric"
+                class="form-control"
+                id="field-birthday"
+                name="birthday"
+                autocomplete="bday"
+                placeholder="01/01/1970"
+                maxlength="10"
+                aria-labelledby="field-birthday-label"
+                required
+              />
               <span class="validity"></span>
             </div>
             <p class="exemple"></p>
 
-            <label for="field-lieunaissance"  id="field-lieunaissance-label">Lieu de naissance</label>
+            <label for="field-lieunaissance" id="field-lieunaissance-label"
+              >Lieu de naissance</label
+            >
             <div class="input-group  align-items-center">
               <input
-                 type="text"
-                 class="form-control"
-                 id="field-lieunaissance"
-                 name="lieunaissance"
-                 aria-labelledby="field-lieunaissance-label"
-                 placeholder="Lyon"
-                 required
-                 >
+                type="text"
+                class="form-control"
+                id="field-lieunaissance"
+                name="lieunaissance"
+                aria-labelledby="field-lieunaissance-label"
+                placeholder="Lyon"
+                required
+              />
               <span class="validity"></span>
             </div>
             <p class="exemple"></p>
@@ -159,15 +157,15 @@
             <label for="field-address" id="field-address-label">Adresse</label>
             <div class="input-group  align-items-center">
               <input
-                 type="text"
-                 class="form-control"
-                 id="field-address"
-                 name="address"
-                 autocomplete="address-line1"
-                 aria-labelledby="field-address-label"
-                 placeholder="999 avenue de france"
-                 required
-                 >
+                type="text"
+                class="form-control"
+                id="field-address"
+                name="address"
+                autocomplete="address-line1"
+                aria-labelledby="field-address-label"
+                placeholder="999 avenue de france"
+                required
+              />
               <span class="validity"></span>
             </div>
             <p class="exemple"></p>
@@ -175,110 +173,217 @@
             <label for="field-town" id="field-town-label">Ville</label>
             <div class="input-group  align-items-center">
               <input
-                 type="text"
-                 class="form-control"
-                 id="field-town"
-                 name="town"
-                 autocomplete="address-level2"
-                 aria-labelledby="field-town-label"
-                 placeholder="Paris"
-                 required
-                 >
+                type="text"
+                class="form-control"
+                id="field-town"
+                name="town"
+                autocomplete="address-level2"
+                aria-labelledby="field-town-label"
+                placeholder="Paris"
+                required
+              />
               <span class="validity"></span>
             </div>
             <p class="exemple"></p>
 
-            <label for="field-zipcode" id="field-zipcode-label" >Code Postal</label>
+            <label for="field-zipcode" id="field-zipcode-label"
+              >Code Postal</label
+            >
             <div class="input-group  align-items-center">
               <input
-                 type="number"
-                 min="00000"
-                 max="99999"
-                 class="form-control"
-                 id="field-zipcode"
-                 name="zipcode"
-                 autocomplete="postal-code"
-                 minlength="4"
-                 maxlength="5"
-                 aria-labelledby="field-zipcode-label"
-                 placeholder="75001"
-                 required
-                 >
+                type="number"
+                min="00000"
+                max="99999"
+                class="form-control"
+                id="field-zipcode"
+                name="zipcode"
+                autocomplete="postal-code"
+                minlength="4"
+                maxlength="5"
+                aria-labelledby="field-zipcode-label"
+                placeholder="75001"
+                required
+              />
               <span class="validity"></span>
             </div>
             <p class="exemple"></p>
 
             <h3>Choisissez un motif de sortie</h3>
-            <input class="checkbox-custom" type="checkbox" name="field-reason" id="checkbox-travail" value="travail" >
-            <label class="checkbox-custom-label form-check-label" for="checkbox-travail">Déplacements entre le domicile et le lieu d’exercice de l’activité professionnelle, lorsqu'ils sont indispensables à l'exercice d’activités ne pouvant être organisées sous forme de télétravail ou déplacements professionnels ne pouvant être différés.</label>
+            <input
+              class="checkbox-custom"
+              type="checkbox"
+              name="field-reason"
+              id="checkbox-travail"
+              value="travail"
+            />
+            <label
+              class="checkbox-custom-label form-check-label"
+              for="checkbox-travail"
+              >Déplacements entre le domicile et le lieu d’exercice de
+              l’activité professionnelle, lorsqu'ils sont indispensables à
+              l'exercice d’activités ne pouvant être organisées sous forme de
+              télétravail ou déplacements professionnels ne pouvant être
+              différés.</label
+            >
 
-            <input class="checkbox-custom" type="checkbox" name="field-reason" id="checkbox-courses" value="courses">
-            <label class="checkbox-custom-label form-check-label" for="checkbox-courses">Déplacements pour effectuer des achats de fournitures nécessaires à l’activité professionnelle et des achats de première nécessité dans des établissements dont les activités demeurent autorisées <a href="https://www.service-public.fr/particuliers/actualites/A13921" rel="noreferrer" target="_blank">(liste sur gouvernement.fr)</a>.</label>
+            <input
+              class="checkbox-custom"
+              type="checkbox"
+              name="field-reason"
+              id="checkbox-courses"
+              value="courses"
+            />
+            <label
+              class="checkbox-custom-label form-check-label"
+              for="checkbox-courses"
+              >Déplacements pour effectuer des achats de fournitures nécessaires
+              à l’activité professionnelle et des achats de première nécessité
+              dans des établissements dont les activités demeurent autorisées
+              <a
+                href="https://www.service-public.fr/particuliers/actualites/A13921"
+                rel="noreferrer"
+                target="_blank"
+                >(liste sur gouvernement.fr)</a
+              >.</label
+            >
 
-            <input class="checkbox-custom" type="checkbox" name="field-reason" id="checkbox-sante" value="sante">
-            <label class="checkbox-custom-label form-check-label" for="checkbox-sante">Consultations et soins ne pouvant être assurés à distance et ne pouvant être différés ; consultations et soins des patients atteints d'une affection de longue durée.</label>
+            <input
+              class="checkbox-custom"
+              type="checkbox"
+              name="field-reason"
+              id="checkbox-sante"
+              value="sante"
+            />
+            <label
+              class="checkbox-custom-label form-check-label"
+              for="checkbox-sante"
+              >Consultations et soins ne pouvant être assurés à distance et ne
+              pouvant être différés ; consultations et soins des patients
+              atteints d'une affection de longue durée.</label
+            >
 
-            <input class="checkbox-custom" type="checkbox" name="field-reason" id="checkbox-famille" value="famille">
-            <label class="checkbox-custom-label form-check-label" for="checkbox-famille">Déplacements pour motif familial impérieux, pour l’assistance aux personnes vulnérables ou la garde d’enfants.</label>
+            <input
+              class="checkbox-custom"
+              type="checkbox"
+              name="field-reason"
+              id="checkbox-famille"
+              value="famille"
+            />
+            <label
+              class="checkbox-custom-label form-check-label"
+              for="checkbox-famille"
+              >Déplacements pour motif familial impérieux, pour l’assistance aux
+              personnes vulnérables ou la garde d’enfants.</label
+            >
 
-            <input class="checkbox-custom" type="checkbox" name="field-reason" id="checkbox-sport" value="sport">
-            <label class="checkbox-custom-label form-check-label" for="checkbox-sport">Déplacements brefs, dans la limite d'une heure quotidienne et dans un rayon maximal d'un kilomètre autour du domicile, liés soit à l'activité physique individuelle des personnes, à l'exclusion de toute pratique sportive collective et de toute proximité avec d'autres personnes, soit à la promenade avec les seules personnes regroupées dans un même domicile, soit aux besoins des animaux de compagnie.</label>
+            <input
+              class="checkbox-custom"
+              type="checkbox"
+              name="field-reason"
+              id="checkbox-sport"
+              value="sport"
+            />
+            <label
+              class="checkbox-custom-label form-check-label"
+              for="checkbox-sport"
+              >Déplacements brefs, dans la limite d'une heure quotidienne et
+              dans un rayon maximal d'un kilomètre autour du domicile, liés soit
+              à l'activité physique individuelle des personnes, à l'exclusion de
+              toute pratique sportive collective et de toute proximité avec
+              d'autres personnes, soit à la promenade avec les seules personnes
+              regroupées dans un même domicile, soit aux besoins des animaux de
+              compagnie.</label
+            >
 
-            <input class="checkbox-custom" type="checkbox" name="field-reason" id="checkbox-missions" value="missions">
-            <label class="checkbox-custom-label form-check-label" for="checkbox-missions">Participation à des missions d’intérêt général sur demande de l’autorité administrative.</label>
+            <input
+              class="checkbox-custom"
+              type="checkbox"
+              name="field-reason"
+              id="checkbox-missions"
+              value="missions"
+            />
+            <label
+              class="checkbox-custom-label form-check-label"
+              for="checkbox-missions"
+              >Participation à des missions d’intérêt général sur demande de
+              l’autorité administrative.</label
+            >
 
-            <input class="checkbox-custom" type="checkbox" name="field-reason" id="checkbox-judiciaire" value="judiciaire">
-            <label class="checkbox-custom-label form-check-label" for="checkbox-judiciaire">Convocation judiciaire ou administrative.</label>
-
+            <input
+              class="checkbox-custom"
+              type="checkbox"
+              name="field-reason"
+              id="checkbox-judiciaire"
+              value="judiciaire"
+            />
+            <label
+              class="checkbox-custom-label form-check-label"
+              for="checkbox-judiciaire"
+              >Convocation judiciaire ou administrative.</label
+            >
 
             <label for="field-datesortie">Date de sortie</label>
             <div class="input-group  align-items-center">
-              <input type="date" class="form-control" id="field-datesortie" name="datesortie" placeholder="JJ/MM/YYYY" required>
+              <input
+                type="date"
+                class="form-control"
+                id="field-datesortie"
+                name="datesortie"
+                placeholder="JJ/MM/YYYY"
+                required
+              />
               <span class="validity"></span>
             </div>
 
             <label for="field-heuresortie">Heure de sortie</label>
             <div class="input-group  align-items-center">
-              <input type="time" class="form-control" id="field-heuresortie" name="heure" required>
+              <input
+                type="time"
+                class="form-control"
+                id="field-heuresortie"
+                name="heure"
+                required
+              />
               <span class="validity"></span>
             </div>
-
-
           </fieldset>
         </form>
 
-        <p>Générer une attestation pour faire ses courses avec <code>pdf-lib</code></p>
+        <p>
+          Générer une attestation pour faire ses courses avec
+          <code>pdf-lib</code>
+        </p>
         <button id="getPDF" class="generate">Télécharger l'attestation</button>
         <button id="showPDF" class="generate">Voir l'attestation</button>
         <section class="error" id="error"></section>
-
       </section>
 
       <footer class="footer">
-        <section class="container">
-        </section>
+        <section class="container"></section>
       </footer>
-
     </main>
 
     <script type="text/javascript" src="certificate.js"></script>
     <script>
-  if ( "serviceWorker" in navigator ) {
-    // trick found in https://github.com/cyyyu/parcel-plugin-sw-precache/issues/4
-    let swPath = `service-worker.js`;
-    navigator.serviceWorker.register(swPath)
-      .then( function ( registration ) { // Registration was successful
+      if ("serviceWorker" in navigator) {
+        // trick found in https://github.com/cyyyu/parcel-plugin-sw-precache/issues/4
+        let swPath = `service-worker.js`;
+        navigator.serviceWorker
+          .register(swPath)
+          .then(function(registration) {
+            // Registration was successful
 
-        console.log( "ServiceWorker registration successful with scope: ", registration.scope );
+            console.log(
+              "ServiceWorker registration successful with scope: ",
+              registration.scope
+            );
+          })
+          .catch(function(err) {
+            // registration failed :(
 
-      } ).catch( function ( err ) { // registration failed :(
-
-        console.error( "ServiceWorker registration failed: ", err );
-      } );
-
-  }
-</script>
-
+            console.error("ServiceWorker registration failed: ", err);
+          });
+      }
+    </script>
   </body>
-
 </html>
