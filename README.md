@@ -3,7 +3,9 @@
 Official page : https://attestation-covid19.altertek.org
 
 Lightweight alternative to the offical certification website
+
 This project is a complete Progressive Web Application that works both on mobiles and desktop browsers.
+
 You can run this app in offline mode.
 
 ## Application installation
