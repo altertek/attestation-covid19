@@ -2,6 +2,8 @@ import { PDFDocument, StandardFonts, grayscale } from "pdf-lib";
 import QRCode from "qrcode";
 import "regenerator-runtime/runtime";
 import pdfBase from "./base.pdf";
+import "./lib/milligram.min.css";
+import "./style.css";
 
 const generateQR = async text => {
   try {
