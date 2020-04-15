@@ -21,7 +21,6 @@
   },
   "homepage": "https://attestation-covid19.altertek.org/",
   "dependencies": {
-    "parcel-plugin-sw-precache": "^1.1.2",
     "pdf-lib": "^1.4.1",
     "qrcode": "^1.4.4",
     "regenerator-runtime": "^0.13.5"
@@ -33,6 +32,8 @@
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-prettier": "^3.0.1",
     "parcel-bundler": "^1.12.4",
+    "parcel-plugin-subresource-integrity": "^0.3.4",
+    "parcel-plugin-sw-precache": "^1.1.2",
     "prettier": "^1.16.4"
   }
 }
