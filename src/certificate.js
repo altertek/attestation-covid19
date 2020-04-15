@@ -322,3 +322,22 @@ document.getElementById("field-birthday").addEventListener("keyup", event => {
   if (key === backspaceDeleteKey || key === deleteKey) return;
   addSlash();
 });
+
+if ("serviceWorker" in navigator) {
+  /* trick found in https://github.com/cyyyu/parcel-plugin-sw-precache/issues/4 */
+  const swPath = `service-worker.js`;
+  navigator.serviceWorker
+    .register(swPath)
+    .then(registration => {
+      /* Registration was successful */
+      /* eslint-disable-next-line no-console */
+      console.log(
+        "ServiceWorker registration successful with scope: ",
+        registration.scope
+      );
+    })
+    .catch(err => {
+      /* registration failed */
+      console.error("ServiceWorker registration failed: ", err);
+    });
+}
